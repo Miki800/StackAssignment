@@ -1,5 +1,6 @@
 import pytest
 from random import randrange
+from threading import Thread
 from stack import Stack
 
 ORDERED_LIST = (1,2,3,4,5,6)
@@ -27,3 +28,16 @@ def test_push_pop(lst):
 
     for element in lst[::-1]:
         assert s.pop() == element
+
+def _pushing(s, lst):
+    [s.push(element) for element in lst]
+
+def test_multiple_threads():
+    s = Stack()
+    t1 = Thread(target=_pushing, args=(s, ORDERED_LIST))
+    t2 = Thread(target=_pushing, args=(s, RANDOM_LIST))
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+    assert max(ORDERED_LIST + RANDOM_LIST) == s.get_largest()
