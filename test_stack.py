@@ -16,3 +16,14 @@ def test_largest(lst):
     for element in lst:
         s.push(element)
         _verify_largest(s)
+
+@pytest.mark.parametrize(
+    "lst", (ORDERED_LIST, RANDOM_LIST), ids=("ordered", "random"))
+def test_push_pop(lst):
+    s = Stack()
+    for element in lst:
+        s.push(element)
+        assert s.peek() == element
+
+    for element in lst[::-1]:
+        assert s.pop() == element
