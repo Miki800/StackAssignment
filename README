@@ -1,0 +1,8 @@
+To verify pep8 run in current directory:
+$ pylint
+
+To list the tests run:
+$ py.test --collect-only
+
+To perform the tests run:
+$ py.test
